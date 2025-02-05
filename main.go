@@ -20,7 +20,7 @@ type Client struct {
 	port      int
 }
 
-type Option func(*Client)
+type option func(*Client)
 
 func newConn(host string, port int) (net.Conn, error) {
 	addr := fmt.Sprintf("%s:%d", host, port)
@@ -31,13 +31,13 @@ func newConn(host string, port int) (net.Conn, error) {
 	return conn, nil
 }
 
-func WithID(id string) Option {
+func WithID(id string) option {
 	return func(c *Client) {
 		c.id = id
 	}
 }
 
-func NewClient(host string, port int, opts ...Option) (*Client, error) {
+func NewClient(host string, port int, opts ...option) (*Client, error) {
 	conn, err := newConn(host, port)
 	if err != nil {
 		return nil, err
@@ -53,8 +53,8 @@ func NewClient(host string, port int, opts ...Option) (*Client, error) {
 	}
 
 	if resp := client.Fire(&wire.Command{
-		Cmd:  "CLIENT.ID",
-		Args: []string{client.id},
+		Cmd:  "HANDSHAKE",
+		Args: []string{client.id, "command"},
 	}); resp.Err != "" {
 		return nil, fmt.Errorf("could not complete the handshake: %s", resp.Err)
 	}
@@ -62,14 +62,14 @@ func NewClient(host string, port int, opts ...Option) (*Client, error) {
 	return client, nil
 }
 
-func (c *Client) Fire(cmd *wire.Command) *wire.Response {
-	if err := ironhawk.Write(c.conn, cmd); err != nil {
+func (c *Client) fire(cmd *wire.Command, co net.Conn) *wire.Response {
+	if err := ironhawk.Write(co, cmd); err != nil {
 		return &wire.Response{
 			Err: err.Error(),
 		}
 	}
 
-	resp, err := ironhawk.Read(c.conn)
+	resp, err := ironhawk.Read(co)
 	if err != nil {
 		return &wire.Response{
 			Err: err.Error(),
@@ -77,6 +77,10 @@ func (c *Client) Fire(cmd *wire.Command) *wire.Response {
 	}
 
 	return resp
+}
+
+func (c *Client) Fire(cmd *wire.Command) *wire.Response {
+	return c.fire(cmd, c.conn)
 }
 
 func (c *Client) FireString(cmdStr string) *wire.Response {
@@ -107,10 +111,11 @@ func (c *Client) WatchCh() (<-chan *wire.Response, error) {
 		return nil, err
 	}
 
-	if resp := c.Fire(&wire.Command{
-		Cmd: "CLIENT.WATCH",
-	}); resp.Err != "" {
-		return nil, fmt.Errorf("could not watch at the moment: %s", resp.Err)
+	if resp := c.fire(&wire.Command{
+		Cmd:  "HANDSHAKE",
+		Args: []string{c.id, "watch"},
+	}, c.watchConn); resp.Err != "" {
+		return nil, fmt.Errorf("could not complete the handshake: %s", resp.Err)
 	}
 
 	return c.watchCh, nil
