@@ -118,7 +118,22 @@ func (c *Client) WatchCh() (<-chan *wire.Response, error) {
 		return nil, fmt.Errorf("could not complete the handshake: %s", resp.Err)
 	}
 
+	go c.watch()
+
 	return c.watchCh, nil
+}
+
+func (c *Client) watch() {
+	for {
+		resp, err := ironhawk.Read(c.watchConn)
+		if err != nil {
+			// TODO: handle this better
+			// send the error to the user. maybe through context?
+			panic(err)
+		}
+
+		c.watchCh <- resp
+	}
 }
 
 func (c *Client) Close() {
