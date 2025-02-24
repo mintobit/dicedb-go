@@ -13,5 +13,5 @@ test:
 	go test -v ./...
 
 release:
-	git tag -a v$(VERSION) -m "release $(VERSION)"
-	git push origin v$(VERSION)
+	git tag -a $(VERSION) -m "release $(VERSION)"
+	git push origin $(VERSION)
