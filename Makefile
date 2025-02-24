@@ -1,5 +1,7 @@
 GOLANGCI_LINT_VERSION := 1.60.1
 
+VERSION := $(shell cat VERSION)
+
 lint:
 	gofmt -w .
 	golangci-lint run ./...
@@ -9,3 +11,7 @@ generate:
 
 test:
 	go test -v ./...
+
+release:
+	git tag -a v$(VERSION) -m "release $(VERSION)"
+	git push origin v$(VERSION)
