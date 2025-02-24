@@ -6,7 +6,7 @@ Go SDK for [DiceDB](https://github.com/dicedb/dice).
 ## Installations
 
 ```bash
-$ go get github.com/dicedb/dicedb-go
+$ go get github.com/dicedb/dicedb-go@v1.0.2
 ```
 
 ## Get Started
