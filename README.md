@@ -1,12 +1,12 @@
 dicedb-go
 ===
 
-Go SDK for [DiceDB](https://github.com/dicedb/dice).
+Go client for [DiceDB](https://github.com/dicedb/dice).
 
 ## Installations
 
 ```bash
-$ go get github.com/dicedb/dicedb-go@v1.0.2
+$ go get github.com/dicedb/dicedb-go@v1.0.3
 ```
 
 ## Get Started
