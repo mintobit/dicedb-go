@@ -12,6 +12,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer client.Close()
 
 	resp := client.Fire(&wire.Command{Cmd: "PING"})
 	fmt.Println(resp)
