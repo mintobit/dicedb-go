@@ -6,7 +6,7 @@ Go client for [DiceDB](https://github.com/dicedb/dice).
 ## Installations
 
 ```bash
-$ go get github.com/dicedb/dicedb-go@v1.0.4
+$ go get github.com/dicedb/dicedb-go@v1.0.5
 ```
 
 ## Get Started
