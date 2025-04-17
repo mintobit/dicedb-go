@@ -113,6 +113,7 @@ type Result struct {
 	//	*Result_ZRANGEWATCHRes
 	//	*Result_ZCOUNTWATCHRes
 	//	*Result_ZCARDWATCHRes
+	//	*Result_ZRANKWATCHRes
 	Response      isResult_Response `protobuf_oneof:"response"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -527,6 +528,15 @@ func (x *Result) GetZCARDWATCHRes() *ZCARDWATCHRes {
 	return nil
 }
 
+func (x *Result) GetZRANKWATCHRes() *ZRANKWATCHRes {
+	if x != nil {
+		if x, ok := x.Response.(*Result_ZRANKWATCHRes); ok {
+			return x.ZRANKWATCHRes
+		}
+	}
+	return nil
+}
+
 type isResult_Response interface {
 	isResult_Response()
 }
@@ -687,6 +697,10 @@ type Result_ZCARDWATCHRes struct {
 	ZCARDWATCHRes *ZCARDWATCHRes `protobuf:"bytes,49,opt,name=ZCARDWATCHRes,proto3,oneof"`
 }
 
+type Result_ZRANKWATCHRes struct {
+	ZRANKWATCHRes *ZRANKWATCHRes `protobuf:"bytes,50,opt,name=ZRANKWATCHRes,proto3,oneof"`
+}
+
 func (*Result_TYPERes) isResult_Response() {}
 
 func (*Result_PINGRes) isResult_Response() {}
@@ -765,6 +779,44 @@ func (*Result_ZCOUNTWATCHRes) isResult_Response() {}
 
 func (*Result_ZCARDWATCHRes) isResult_Response() {}
 
+func (*Result_ZRANKWATCHRes) isResult_Response() {}
+
+type ZRANKWATCHRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ZRANKWATCHRes) Reset() {
+	*x = ZRANKWATCHRes{}
+	mi := &file_protos_res_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZRANKWATCHRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZRANKWATCHRes) ProtoMessage() {}
+
+func (x *ZRANKWATCHRes) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_res_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZRANKWATCHRes.ProtoReflect.Descriptor instead.
+func (*ZRANKWATCHRes) Descriptor() ([]byte, []int) {
+	return file_protos_res_proto_rawDescGZIP(), []int{1}
+}
+
 type HGETWATCHRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -773,7 +825,7 @@ type HGETWATCHRes struct {
 
 func (x *HGETWATCHRes) Reset() {
 	*x = HGETWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[1]
+	mi := &file_protos_res_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -785,7 +837,7 @@ func (x *HGETWATCHRes) String() string {
 func (*HGETWATCHRes) ProtoMessage() {}
 
 func (x *HGETWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[1]
+	mi := &file_protos_res_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -798,7 +850,7 @@ func (x *HGETWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HGETWATCHRes.ProtoReflect.Descriptor instead.
 func (*HGETWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{1}
+	return file_protos_res_proto_rawDescGZIP(), []int{2}
 }
 
 type HGETALLWATCHRes struct {
@@ -809,7 +861,7 @@ type HGETALLWATCHRes struct {
 
 func (x *HGETALLWATCHRes) Reset() {
 	*x = HGETALLWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[2]
+	mi := &file_protos_res_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -821,7 +873,7 @@ func (x *HGETALLWATCHRes) String() string {
 func (*HGETALLWATCHRes) ProtoMessage() {}
 
 func (x *HGETALLWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[2]
+	mi := &file_protos_res_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -834,7 +886,7 @@ func (x *HGETALLWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HGETALLWATCHRes.ProtoReflect.Descriptor instead.
 func (*HGETALLWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{2}
+	return file_protos_res_proto_rawDescGZIP(), []int{3}
 }
 
 type GETWATCHRes struct {
@@ -845,7 +897,7 @@ type GETWATCHRes struct {
 
 func (x *GETWATCHRes) Reset() {
 	*x = GETWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[3]
+	mi := &file_protos_res_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -857,7 +909,7 @@ func (x *GETWATCHRes) String() string {
 func (*GETWATCHRes) ProtoMessage() {}
 
 func (x *GETWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[3]
+	mi := &file_protos_res_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -870,7 +922,7 @@ func (x *GETWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GETWATCHRes.ProtoReflect.Descriptor instead.
 func (*GETWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{3}
+	return file_protos_res_proto_rawDescGZIP(), []int{4}
 }
 
 type UNWATCHRes struct {
@@ -881,7 +933,7 @@ type UNWATCHRes struct {
 
 func (x *UNWATCHRes) Reset() {
 	*x = UNWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[4]
+	mi := &file_protos_res_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -893,7 +945,7 @@ func (x *UNWATCHRes) String() string {
 func (*UNWATCHRes) ProtoMessage() {}
 
 func (x *UNWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[4]
+	mi := &file_protos_res_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -906,7 +958,7 @@ func (x *UNWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UNWATCHRes.ProtoReflect.Descriptor instead.
 func (*UNWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{4}
+	return file_protos_res_proto_rawDescGZIP(), []int{5}
 }
 
 type ZADDRes struct {
@@ -918,7 +970,7 @@ type ZADDRes struct {
 
 func (x *ZADDRes) Reset() {
 	*x = ZADDRes{}
-	mi := &file_protos_res_proto_msgTypes[5]
+	mi := &file_protos_res_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -930,7 +982,7 @@ func (x *ZADDRes) String() string {
 func (*ZADDRes) ProtoMessage() {}
 
 func (x *ZADDRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[5]
+	mi := &file_protos_res_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -943,7 +995,7 @@ func (x *ZADDRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZADDRes.ProtoReflect.Descriptor instead.
 func (*ZADDRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{5}
+	return file_protos_res_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ZADDRes) GetCount() int64 {
@@ -962,7 +1014,7 @@ type ZCOUNTRes struct {
 
 func (x *ZCOUNTRes) Reset() {
 	*x = ZCOUNTRes{}
-	mi := &file_protos_res_proto_msgTypes[6]
+	mi := &file_protos_res_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -974,7 +1026,7 @@ func (x *ZCOUNTRes) String() string {
 func (*ZCOUNTRes) ProtoMessage() {}
 
 func (x *ZCOUNTRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[6]
+	mi := &file_protos_res_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -987,7 +1039,7 @@ func (x *ZCOUNTRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZCOUNTRes.ProtoReflect.Descriptor instead.
 func (*ZCOUNTRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{6}
+	return file_protos_res_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ZCOUNTRes) GetCount() int64 {
@@ -1006,7 +1058,7 @@ type TYPERes struct {
 
 func (x *TYPERes) Reset() {
 	*x = TYPERes{}
-	mi := &file_protos_res_proto_msgTypes[7]
+	mi := &file_protos_res_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1018,7 +1070,7 @@ func (x *TYPERes) String() string {
 func (*TYPERes) ProtoMessage() {}
 
 func (x *TYPERes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[7]
+	mi := &file_protos_res_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1031,7 +1083,7 @@ func (x *TYPERes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TYPERes.ProtoReflect.Descriptor instead.
 func (*TYPERes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{7}
+	return file_protos_res_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TYPERes) GetType() string {
@@ -1050,7 +1102,7 @@ type PINGRes struct {
 
 func (x *PINGRes) Reset() {
 	*x = PINGRes{}
-	mi := &file_protos_res_proto_msgTypes[8]
+	mi := &file_protos_res_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1062,7 +1114,7 @@ func (x *PINGRes) String() string {
 func (*PINGRes) ProtoMessage() {}
 
 func (x *PINGRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[8]
+	mi := &file_protos_res_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1075,7 +1127,7 @@ func (x *PINGRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PINGRes.ProtoReflect.Descriptor instead.
 func (*PINGRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{8}
+	return file_protos_res_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *PINGRes) GetMessage() string {
@@ -1094,7 +1146,7 @@ type HGETRes struct {
 
 func (x *HGETRes) Reset() {
 	*x = HGETRes{}
-	mi := &file_protos_res_proto_msgTypes[9]
+	mi := &file_protos_res_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1106,7 +1158,7 @@ func (x *HGETRes) String() string {
 func (*HGETRes) ProtoMessage() {}
 
 func (x *HGETRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[9]
+	mi := &file_protos_res_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1119,7 +1171,7 @@ func (x *HGETRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HGETRes.ProtoReflect.Descriptor instead.
 func (*HGETRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{9}
+	return file_protos_res_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *HGETRes) GetValue() string {
@@ -1138,7 +1190,7 @@ type HSETRes struct {
 
 func (x *HSETRes) Reset() {
 	*x = HSETRes{}
-	mi := &file_protos_res_proto_msgTypes[10]
+	mi := &file_protos_res_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1150,7 +1202,7 @@ func (x *HSETRes) String() string {
 func (*HSETRes) ProtoMessage() {}
 
 func (x *HSETRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[10]
+	mi := &file_protos_res_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1163,7 +1215,7 @@ func (x *HSETRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HSETRes.ProtoReflect.Descriptor instead.
 func (*HSETRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{10}
+	return file_protos_res_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *HSETRes) GetCount() int64 {
@@ -1183,7 +1235,7 @@ type HElement struct {
 
 func (x *HElement) Reset() {
 	*x = HElement{}
-	mi := &file_protos_res_proto_msgTypes[11]
+	mi := &file_protos_res_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1195,7 +1247,7 @@ func (x *HElement) String() string {
 func (*HElement) ProtoMessage() {}
 
 func (x *HElement) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[11]
+	mi := &file_protos_res_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1208,7 +1260,7 @@ func (x *HElement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HElement.ProtoReflect.Descriptor instead.
 func (*HElement) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{11}
+	return file_protos_res_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *HElement) GetKey() string {
@@ -1234,7 +1286,7 @@ type HGETALLRes struct {
 
 func (x *HGETALLRes) Reset() {
 	*x = HGETALLRes{}
-	mi := &file_protos_res_proto_msgTypes[12]
+	mi := &file_protos_res_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1246,7 +1298,7 @@ func (x *HGETALLRes) String() string {
 func (*HGETALLRes) ProtoMessage() {}
 
 func (x *HGETALLRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[12]
+	mi := &file_protos_res_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1259,7 +1311,7 @@ func (x *HGETALLRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HGETALLRes.ProtoReflect.Descriptor instead.
 func (*HGETALLRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{12}
+	return file_protos_res_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *HGETALLRes) GetElements() []*HElement {
@@ -1278,7 +1330,7 @@ type TTLRes struct {
 
 func (x *TTLRes) Reset() {
 	*x = TTLRes{}
-	mi := &file_protos_res_proto_msgTypes[13]
+	mi := &file_protos_res_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1290,7 +1342,7 @@ func (x *TTLRes) String() string {
 func (*TTLRes) ProtoMessage() {}
 
 func (x *TTLRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[13]
+	mi := &file_protos_res_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1303,7 +1355,7 @@ func (x *TTLRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TTLRes.ProtoReflect.Descriptor instead.
 func (*TTLRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{13}
+	return file_protos_res_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *TTLRes) GetSeconds() int64 {
@@ -1322,7 +1374,7 @@ type EXPIRERes struct {
 
 func (x *EXPIRERes) Reset() {
 	*x = EXPIRERes{}
-	mi := &file_protos_res_proto_msgTypes[14]
+	mi := &file_protos_res_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1334,7 +1386,7 @@ func (x *EXPIRERes) String() string {
 func (*EXPIRERes) ProtoMessage() {}
 
 func (x *EXPIRERes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[14]
+	mi := &file_protos_res_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1347,7 +1399,7 @@ func (x *EXPIRERes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EXPIRERes.ProtoReflect.Descriptor instead.
 func (*EXPIRERes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{14}
+	return file_protos_res_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *EXPIRERes) GetIsChanged() bool {
@@ -1366,7 +1418,7 @@ type EXPIREATRes struct {
 
 func (x *EXPIREATRes) Reset() {
 	*x = EXPIREATRes{}
-	mi := &file_protos_res_proto_msgTypes[15]
+	mi := &file_protos_res_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1378,7 +1430,7 @@ func (x *EXPIREATRes) String() string {
 func (*EXPIREATRes) ProtoMessage() {}
 
 func (x *EXPIREATRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[15]
+	mi := &file_protos_res_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1391,7 +1443,7 @@ func (x *EXPIREATRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EXPIREATRes.ProtoReflect.Descriptor instead.
 func (*EXPIREATRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{15}
+	return file_protos_res_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *EXPIREATRes) GetIsChanged() bool {
@@ -1410,7 +1462,7 @@ type EXPIRETIMERes struct {
 
 func (x *EXPIRETIMERes) Reset() {
 	*x = EXPIRETIMERes{}
-	mi := &file_protos_res_proto_msgTypes[16]
+	mi := &file_protos_res_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1422,7 +1474,7 @@ func (x *EXPIRETIMERes) String() string {
 func (*EXPIRETIMERes) ProtoMessage() {}
 
 func (x *EXPIRETIMERes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[16]
+	mi := &file_protos_res_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1435,7 +1487,7 @@ func (x *EXPIRETIMERes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EXPIRETIMERes.ProtoReflect.Descriptor instead.
 func (*EXPIRETIMERes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{16}
+	return file_protos_res_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *EXPIRETIMERes) GetUnixSec() int64 {
@@ -1454,7 +1506,7 @@ type ECHORes struct {
 
 func (x *ECHORes) Reset() {
 	*x = ECHORes{}
-	mi := &file_protos_res_proto_msgTypes[17]
+	mi := &file_protos_res_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1466,7 +1518,7 @@ func (x *ECHORes) String() string {
 func (*ECHORes) ProtoMessage() {}
 
 func (x *ECHORes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[17]
+	mi := &file_protos_res_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1479,7 +1531,7 @@ func (x *ECHORes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ECHORes.ProtoReflect.Descriptor instead.
 func (*ECHORes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{17}
+	return file_protos_res_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ECHORes) GetMessage() string {
@@ -1498,7 +1550,7 @@ type EXISTSRes struct {
 
 func (x *EXISTSRes) Reset() {
 	*x = EXISTSRes{}
-	mi := &file_protos_res_proto_msgTypes[18]
+	mi := &file_protos_res_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1510,7 +1562,7 @@ func (x *EXISTSRes) String() string {
 func (*EXISTSRes) ProtoMessage() {}
 
 func (x *EXISTSRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[18]
+	mi := &file_protos_res_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1523,7 +1575,7 @@ func (x *EXISTSRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EXISTSRes.ProtoReflect.Descriptor instead.
 func (*EXISTSRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{18}
+	return file_protos_res_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *EXISTSRes) GetCount() int64 {
@@ -1541,7 +1593,7 @@ type HANDSHAKERes struct {
 
 func (x *HANDSHAKERes) Reset() {
 	*x = HANDSHAKERes{}
-	mi := &file_protos_res_proto_msgTypes[19]
+	mi := &file_protos_res_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1553,7 +1605,7 @@ func (x *HANDSHAKERes) String() string {
 func (*HANDSHAKERes) ProtoMessage() {}
 
 func (x *HANDSHAKERes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[19]
+	mi := &file_protos_res_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1566,7 +1618,7 @@ func (x *HANDSHAKERes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HANDSHAKERes.ProtoReflect.Descriptor instead.
 func (*HANDSHAKERes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{19}
+	return file_protos_res_proto_rawDescGZIP(), []int{20}
 }
 
 type GETRes struct {
@@ -1578,7 +1630,7 @@ type GETRes struct {
 
 func (x *GETRes) Reset() {
 	*x = GETRes{}
-	mi := &file_protos_res_proto_msgTypes[20]
+	mi := &file_protos_res_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1590,7 +1642,7 @@ func (x *GETRes) String() string {
 func (*GETRes) ProtoMessage() {}
 
 func (x *GETRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[20]
+	mi := &file_protos_res_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1603,7 +1655,7 @@ func (x *GETRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GETRes.ProtoReflect.Descriptor instead.
 func (*GETRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{20}
+	return file_protos_res_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GETRes) GetValue() string {
@@ -1622,7 +1674,7 @@ type GETEXRes struct {
 
 func (x *GETEXRes) Reset() {
 	*x = GETEXRes{}
-	mi := &file_protos_res_proto_msgTypes[21]
+	mi := &file_protos_res_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1634,7 +1686,7 @@ func (x *GETEXRes) String() string {
 func (*GETEXRes) ProtoMessage() {}
 
 func (x *GETEXRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[21]
+	mi := &file_protos_res_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1647,7 +1699,7 @@ func (x *GETEXRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GETEXRes.ProtoReflect.Descriptor instead.
 func (*GETEXRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{21}
+	return file_protos_res_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GETEXRes) GetValue() string {
@@ -1666,7 +1718,7 @@ type GETSETRes struct {
 
 func (x *GETSETRes) Reset() {
 	*x = GETSETRes{}
-	mi := &file_protos_res_proto_msgTypes[22]
+	mi := &file_protos_res_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1678,7 +1730,7 @@ func (x *GETSETRes) String() string {
 func (*GETSETRes) ProtoMessage() {}
 
 func (x *GETSETRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[22]
+	mi := &file_protos_res_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1691,7 +1743,7 @@ func (x *GETSETRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GETSETRes.ProtoReflect.Descriptor instead.
 func (*GETSETRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{22}
+	return file_protos_res_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GETSETRes) GetValue() string {
@@ -1710,7 +1762,7 @@ type GETDELRes struct {
 
 func (x *GETDELRes) Reset() {
 	*x = GETDELRes{}
-	mi := &file_protos_res_proto_msgTypes[23]
+	mi := &file_protos_res_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1722,7 +1774,7 @@ func (x *GETDELRes) String() string {
 func (*GETDELRes) ProtoMessage() {}
 
 func (x *GETDELRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[23]
+	mi := &file_protos_res_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1735,7 +1787,7 @@ func (x *GETDELRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GETDELRes.ProtoReflect.Descriptor instead.
 func (*GETDELRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{23}
+	return file_protos_res_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *GETDELRes) GetValue() string {
@@ -1753,7 +1805,7 @@ type SETRes struct {
 
 func (x *SETRes) Reset() {
 	*x = SETRes{}
-	mi := &file_protos_res_proto_msgTypes[24]
+	mi := &file_protos_res_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1765,7 +1817,7 @@ func (x *SETRes) String() string {
 func (*SETRes) ProtoMessage() {}
 
 func (x *SETRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[24]
+	mi := &file_protos_res_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1778,7 +1830,7 @@ func (x *SETRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SETRes.ProtoReflect.Descriptor instead.
 func (*SETRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{24}
+	return file_protos_res_proto_rawDescGZIP(), []int{25}
 }
 
 type DELRes struct {
@@ -1790,7 +1842,7 @@ type DELRes struct {
 
 func (x *DELRes) Reset() {
 	*x = DELRes{}
-	mi := &file_protos_res_proto_msgTypes[25]
+	mi := &file_protos_res_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1802,7 +1854,7 @@ func (x *DELRes) String() string {
 func (*DELRes) ProtoMessage() {}
 
 func (x *DELRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[25]
+	mi := &file_protos_res_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1815,7 +1867,7 @@ func (x *DELRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DELRes.ProtoReflect.Descriptor instead.
 func (*DELRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{25}
+	return file_protos_res_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *DELRes) GetCount() int64 {
@@ -1833,7 +1885,7 @@ type FLUSHDBRes struct {
 
 func (x *FLUSHDBRes) Reset() {
 	*x = FLUSHDBRes{}
-	mi := &file_protos_res_proto_msgTypes[26]
+	mi := &file_protos_res_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1845,7 +1897,7 @@ func (x *FLUSHDBRes) String() string {
 func (*FLUSHDBRes) ProtoMessage() {}
 
 func (x *FLUSHDBRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[26]
+	mi := &file_protos_res_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1858,7 +1910,7 @@ func (x *FLUSHDBRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FLUSHDBRes.ProtoReflect.Descriptor instead.
 func (*FLUSHDBRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{26}
+	return file_protos_res_proto_rawDescGZIP(), []int{27}
 }
 
 type KEYSRes struct {
@@ -1870,7 +1922,7 @@ type KEYSRes struct {
 
 func (x *KEYSRes) Reset() {
 	*x = KEYSRes{}
-	mi := &file_protos_res_proto_msgTypes[27]
+	mi := &file_protos_res_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1882,7 +1934,7 @@ func (x *KEYSRes) String() string {
 func (*KEYSRes) ProtoMessage() {}
 
 func (x *KEYSRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[27]
+	mi := &file_protos_res_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1895,7 +1947,7 @@ func (x *KEYSRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use KEYSRes.ProtoReflect.Descriptor instead.
 func (*KEYSRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{27}
+	return file_protos_res_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *KEYSRes) GetKeys() []string {
@@ -1914,7 +1966,7 @@ type INCRRes struct {
 
 func (x *INCRRes) Reset() {
 	*x = INCRRes{}
-	mi := &file_protos_res_proto_msgTypes[28]
+	mi := &file_protos_res_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1926,7 +1978,7 @@ func (x *INCRRes) String() string {
 func (*INCRRes) ProtoMessage() {}
 
 func (x *INCRRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[28]
+	mi := &file_protos_res_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1939,7 +1991,7 @@ func (x *INCRRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use INCRRes.ProtoReflect.Descriptor instead.
 func (*INCRRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{28}
+	return file_protos_res_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *INCRRes) GetValue() int64 {
@@ -1958,7 +2010,7 @@ type DECRRes struct {
 
 func (x *DECRRes) Reset() {
 	*x = DECRRes{}
-	mi := &file_protos_res_proto_msgTypes[29]
+	mi := &file_protos_res_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1970,7 +2022,7 @@ func (x *DECRRes) String() string {
 func (*DECRRes) ProtoMessage() {}
 
 func (x *DECRRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[29]
+	mi := &file_protos_res_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1983,7 +2035,7 @@ func (x *DECRRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DECRRes.ProtoReflect.Descriptor instead.
 func (*DECRRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{29}
+	return file_protos_res_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *DECRRes) GetValue() int64 {
@@ -2002,7 +2054,7 @@ type INCRBYRes struct {
 
 func (x *INCRBYRes) Reset() {
 	*x = INCRBYRes{}
-	mi := &file_protos_res_proto_msgTypes[30]
+	mi := &file_protos_res_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2014,7 +2066,7 @@ func (x *INCRBYRes) String() string {
 func (*INCRBYRes) ProtoMessage() {}
 
 func (x *INCRBYRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[30]
+	mi := &file_protos_res_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2027,7 +2079,7 @@ func (x *INCRBYRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use INCRBYRes.ProtoReflect.Descriptor instead.
 func (*INCRBYRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{30}
+	return file_protos_res_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *INCRBYRes) GetValue() int64 {
@@ -2046,7 +2098,7 @@ type DECRBYRes struct {
 
 func (x *DECRBYRes) Reset() {
 	*x = DECRBYRes{}
-	mi := &file_protos_res_proto_msgTypes[31]
+	mi := &file_protos_res_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2058,7 +2110,7 @@ func (x *DECRBYRes) String() string {
 func (*DECRBYRes) ProtoMessage() {}
 
 func (x *DECRBYRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[31]
+	mi := &file_protos_res_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2071,7 +2123,7 @@ func (x *DECRBYRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DECRBYRes.ProtoReflect.Descriptor instead.
 func (*DECRBYRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{31}
+	return file_protos_res_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *DECRBYRes) GetValue() int64 {
@@ -2091,7 +2143,7 @@ type ZElement struct {
 
 func (x *ZElement) Reset() {
 	*x = ZElement{}
-	mi := &file_protos_res_proto_msgTypes[32]
+	mi := &file_protos_res_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2103,7 +2155,7 @@ func (x *ZElement) String() string {
 func (*ZElement) ProtoMessage() {}
 
 func (x *ZElement) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[32]
+	mi := &file_protos_res_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2116,7 +2168,7 @@ func (x *ZElement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZElement.ProtoReflect.Descriptor instead.
 func (*ZElement) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{32}
+	return file_protos_res_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ZElement) GetScore() int64 {
@@ -2142,7 +2194,7 @@ type ZRANGERes struct {
 
 func (x *ZRANGERes) Reset() {
 	*x = ZRANGERes{}
-	mi := &file_protos_res_proto_msgTypes[33]
+	mi := &file_protos_res_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2154,7 +2206,7 @@ func (x *ZRANGERes) String() string {
 func (*ZRANGERes) ProtoMessage() {}
 
 func (x *ZRANGERes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[33]
+	mi := &file_protos_res_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2167,7 +2219,7 @@ func (x *ZRANGERes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZRANGERes.ProtoReflect.Descriptor instead.
 func (*ZRANGERes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{33}
+	return file_protos_res_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ZRANGERes) GetElements() []*ZElement {
@@ -2186,7 +2238,7 @@ type ZPOPMAXRes struct {
 
 func (x *ZPOPMAXRes) Reset() {
 	*x = ZPOPMAXRes{}
-	mi := &file_protos_res_proto_msgTypes[34]
+	mi := &file_protos_res_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2198,7 +2250,7 @@ func (x *ZPOPMAXRes) String() string {
 func (*ZPOPMAXRes) ProtoMessage() {}
 
 func (x *ZPOPMAXRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[34]
+	mi := &file_protos_res_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2211,7 +2263,7 @@ func (x *ZPOPMAXRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZPOPMAXRes.ProtoReflect.Descriptor instead.
 func (*ZPOPMAXRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{34}
+	return file_protos_res_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ZPOPMAXRes) GetElements() []*ZElement {
@@ -2230,7 +2282,7 @@ type ZREMRes struct {
 
 func (x *ZREMRes) Reset() {
 	*x = ZREMRes{}
-	mi := &file_protos_res_proto_msgTypes[35]
+	mi := &file_protos_res_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2242,7 +2294,7 @@ func (x *ZREMRes) String() string {
 func (*ZREMRes) ProtoMessage() {}
 
 func (x *ZREMRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[35]
+	mi := &file_protos_res_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2255,7 +2307,7 @@ func (x *ZREMRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZREMRes.ProtoReflect.Descriptor instead.
 func (*ZREMRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{35}
+	return file_protos_res_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *ZREMRes) GetCount() int64 {
@@ -2274,7 +2326,7 @@ type ZPOPMINRes struct {
 
 func (x *ZPOPMINRes) Reset() {
 	*x = ZPOPMINRes{}
-	mi := &file_protos_res_proto_msgTypes[36]
+	mi := &file_protos_res_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2286,7 +2338,7 @@ func (x *ZPOPMINRes) String() string {
 func (*ZPOPMINRes) ProtoMessage() {}
 
 func (x *ZPOPMINRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[36]
+	mi := &file_protos_res_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2299,7 +2351,7 @@ func (x *ZPOPMINRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZPOPMINRes.ProtoReflect.Descriptor instead.
 func (*ZPOPMINRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{36}
+	return file_protos_res_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ZPOPMINRes) GetElements() []*ZElement {
@@ -2319,7 +2371,7 @@ type ZRANKRes struct {
 
 func (x *ZRANKRes) Reset() {
 	*x = ZRANKRes{}
-	mi := &file_protos_res_proto_msgTypes[37]
+	mi := &file_protos_res_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2331,7 +2383,7 @@ func (x *ZRANKRes) String() string {
 func (*ZRANKRes) ProtoMessage() {}
 
 func (x *ZRANKRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[37]
+	mi := &file_protos_res_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2344,7 +2396,7 @@ func (x *ZRANKRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZRANKRes.ProtoReflect.Descriptor instead.
 func (*ZRANKRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{37}
+	return file_protos_res_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ZRANKRes) GetRank() int64 {
@@ -2370,7 +2422,7 @@ type ZCARDRes struct {
 
 func (x *ZCARDRes) Reset() {
 	*x = ZCARDRes{}
-	mi := &file_protos_res_proto_msgTypes[38]
+	mi := &file_protos_res_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2382,7 +2434,7 @@ func (x *ZCARDRes) String() string {
 func (*ZCARDRes) ProtoMessage() {}
 
 func (x *ZCARDRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[38]
+	mi := &file_protos_res_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2395,7 +2447,7 @@ func (x *ZCARDRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZCARDRes.ProtoReflect.Descriptor instead.
 func (*ZCARDRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{38}
+	return file_protos_res_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ZCARDRes) GetCount() int64 {
@@ -2413,7 +2465,7 @@ type ZRANGEWATCHRes struct {
 
 func (x *ZRANGEWATCHRes) Reset() {
 	*x = ZRANGEWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[39]
+	mi := &file_protos_res_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2425,7 +2477,7 @@ func (x *ZRANGEWATCHRes) String() string {
 func (*ZRANGEWATCHRes) ProtoMessage() {}
 
 func (x *ZRANGEWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[39]
+	mi := &file_protos_res_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2438,7 +2490,7 @@ func (x *ZRANGEWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZRANGEWATCHRes.ProtoReflect.Descriptor instead.
 func (*ZRANGEWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{39}
+	return file_protos_res_proto_rawDescGZIP(), []int{40}
 }
 
 type ZCOUNTWATCHRes struct {
@@ -2449,7 +2501,7 @@ type ZCOUNTWATCHRes struct {
 
 func (x *ZCOUNTWATCHRes) Reset() {
 	*x = ZCOUNTWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[40]
+	mi := &file_protos_res_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2461,7 +2513,7 @@ func (x *ZCOUNTWATCHRes) String() string {
 func (*ZCOUNTWATCHRes) ProtoMessage() {}
 
 func (x *ZCOUNTWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[40]
+	mi := &file_protos_res_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2474,7 +2526,7 @@ func (x *ZCOUNTWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZCOUNTWATCHRes.ProtoReflect.Descriptor instead.
 func (*ZCOUNTWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{40}
+	return file_protos_res_proto_rawDescGZIP(), []int{41}
 }
 
 type ZCARDWATCHRes struct {
@@ -2485,7 +2537,7 @@ type ZCARDWATCHRes struct {
 
 func (x *ZCARDWATCHRes) Reset() {
 	*x = ZCARDWATCHRes{}
-	mi := &file_protos_res_proto_msgTypes[41]
+	mi := &file_protos_res_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2497,7 +2549,7 @@ func (x *ZCARDWATCHRes) String() string {
 func (*ZCARDWATCHRes) ProtoMessage() {}
 
 func (x *ZCARDWATCHRes) ProtoReflect() protoreflect.Message {
-	mi := &file_protos_res_proto_msgTypes[41]
+	mi := &file_protos_res_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2510,14 +2562,14 @@ func (x *ZCARDWATCHRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZCARDWATCHRes.ProtoReflect.Descriptor instead.
 func (*ZCARDWATCHRes) Descriptor() ([]byte, []int) {
-	return file_protos_res_proto_rawDescGZIP(), []int{41}
+	return file_protos_res_proto_rawDescGZIP(), []int{42}
 }
 
 var File_protos_res_proto protoreflect.FileDescriptor
 
 var file_protos_res_proto_rawDesc = string([]byte{
 	0x0a, 0x10, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2f, 0x72, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x12, 0x04, 0x77, 0x69, 0x72, 0x65, 0x22, 0xfd, 0x0f, 0x0a, 0x06, 0x52, 0x65, 0x73,
+	0x74, 0x6f, 0x12, 0x04, 0x77, 0x69, 0x72, 0x65, 0x22, 0xba, 0x10, 0x0a, 0x06, 0x52, 0x65, 0x73,
 	0x75, 0x6c, 0x74, 0x12, 0x24, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0e, 0x32, 0x0c, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75,
 	0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73,
@@ -2644,99 +2696,104 @@ var file_protos_res_proto_rawDesc = string([]byte{
 	0x3b, 0x0a, 0x0d, 0x5a, 0x43, 0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73,
 	0x18, 0x31, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x43,
 	0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x48, 0x00, 0x52, 0x0d, 0x5a,
-	0x43, 0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x42, 0x0a, 0x0a, 0x08,
-	0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x0e, 0x0a, 0x0c, 0x48, 0x47, 0x45, 0x54,
-	0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x11, 0x0a, 0x0f, 0x48, 0x47, 0x45, 0x54,
-	0x41, 0x4c, 0x4c, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x0d, 0x0a, 0x0b, 0x47,
-	0x45, 0x54, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x0c, 0x0a, 0x0a, 0x55, 0x4e,
-	0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x1f, 0x0a, 0x07, 0x5a, 0x41, 0x44, 0x44,
-	0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x21, 0x0a, 0x09, 0x5a, 0x43, 0x4f,
-	0x55, 0x4e, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x1d, 0x0a, 0x07,
-	0x54, 0x59, 0x50, 0x45, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x23, 0x0a, 0x07, 0x50,
-	0x49, 0x4e, 0x47, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
-	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x22, 0x1f, 0x0a, 0x07, 0x48, 0x47, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x22, 0x1f, 0x0a, 0x07, 0x48, 0x53, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75,
-	0x6e, 0x74, 0x22, 0x32, 0x0a, 0x08, 0x48, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x10,
-	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
-	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x38, 0x0a, 0x0a, 0x48, 0x47, 0x45, 0x54, 0x41, 0x4c,
-	0x4c, 0x52, 0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x48, 0x45,
-	0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73,
-	0x22, 0x22, 0x0a, 0x06, 0x54, 0x54, 0x4c, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x65,
-	0x63, 0x6f, 0x6e, 0x64, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x73, 0x65, 0x63,
-	0x6f, 0x6e, 0x64, 0x73, 0x22, 0x2a, 0x0a, 0x09, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x52, 0x65,
-	0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x73, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64,
-	0x22, 0x2c, 0x0a, 0x0b, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x41, 0x54, 0x52, 0x65, 0x73, 0x12,
-	0x1d, 0x0a, 0x0a, 0x69, 0x73, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x22, 0x2a,
-	0x0a, 0x0d, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x54, 0x49, 0x4d, 0x45, 0x52, 0x65, 0x73, 0x12,
-	0x19, 0x0a, 0x08, 0x75, 0x6e, 0x69, 0x78, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x07, 0x75, 0x6e, 0x69, 0x78, 0x53, 0x65, 0x63, 0x22, 0x23, 0x0a, 0x07, 0x45, 0x43,
-	0x48, 0x4f, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22,
-	0x21, 0x0a, 0x09, 0x45, 0x58, 0x49, 0x53, 0x54, 0x53, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75,
-	0x6e, 0x74, 0x22, 0x0e, 0x0a, 0x0c, 0x48, 0x41, 0x4e, 0x44, 0x53, 0x48, 0x41, 0x4b, 0x45, 0x52,
-	0x65, 0x73, 0x22, 0x1e, 0x0a, 0x06, 0x47, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
-	0x75, 0x65, 0x22, 0x20, 0x0a, 0x08, 0x47, 0x45, 0x54, 0x45, 0x58, 0x52, 0x65, 0x73, 0x12, 0x14,
-	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x47, 0x45, 0x54, 0x53, 0x45, 0x54, 0x52, 0x65,
-	0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x47, 0x45, 0x54, 0x44, 0x45,
-	0x4c, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x08, 0x0a, 0x06, 0x53, 0x45,
-	0x54, 0x52, 0x65, 0x73, 0x22, 0x1e, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x52, 0x65, 0x73, 0x12, 0x14,
-	0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63,
-	0x6f, 0x75, 0x6e, 0x74, 0x22, 0x0c, 0x0a, 0x0a, 0x46, 0x4c, 0x55, 0x53, 0x48, 0x44, 0x42, 0x52,
-	0x65, 0x73, 0x22, 0x1d, 0x0a, 0x07, 0x4b, 0x45, 0x59, 0x53, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a,
-	0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65, 0x79,
-	0x73, 0x22, 0x1f, 0x0a, 0x07, 0x49, 0x4e, 0x43, 0x52, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76, 0x61, 0x6c,
-	0x75, 0x65, 0x22, 0x1f, 0x0a, 0x07, 0x44, 0x45, 0x43, 0x52, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x49, 0x4e, 0x43, 0x52, 0x42, 0x59, 0x52, 0x65, 0x73,
-	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x44, 0x45, 0x43, 0x52, 0x42, 0x59,
-	0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x38, 0x0a, 0x08, 0x5a, 0x45, 0x6c,
-	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6d,
-	0x65, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6d, 0x65, 0x6d,
-	0x62, 0x65, 0x72, 0x22, 0x37, 0x0a, 0x09, 0x5a, 0x52, 0x41, 0x4e, 0x47, 0x45, 0x52, 0x65, 0x73,
-	0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65,
-	0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x38, 0x0a, 0x0a,
-	0x5a, 0x50, 0x4f, 0x50, 0x4d, 0x41, 0x58, 0x52, 0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c,
-	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77,
-	0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c,
-	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x1f, 0x0a, 0x07, 0x5a, 0x52, 0x45, 0x4d, 0x52, 0x65,
+	0x43, 0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x12, 0x3b, 0x0a, 0x0d,
+	0x5a, 0x52, 0x41, 0x4e, 0x4b, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x18, 0x32, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x52, 0x41, 0x4e, 0x4b,
+	0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x48, 0x00, 0x52, 0x0d, 0x5a, 0x52, 0x41, 0x4e,
+	0x4b, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x42, 0x0a, 0x0a, 0x08, 0x72, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x0f, 0x0a, 0x0d, 0x5a, 0x52, 0x41, 0x4e, 0x4b, 0x57, 0x41,
+	0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x0e, 0x0a, 0x0c, 0x48, 0x47, 0x45, 0x54, 0x57, 0x41,
+	0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x11, 0x0a, 0x0f, 0x48, 0x47, 0x45, 0x54, 0x41, 0x4c,
+	0x4c, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x0d, 0x0a, 0x0b, 0x47, 0x45, 0x54,
+	0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x0c, 0x0a, 0x0a, 0x55, 0x4e, 0x57, 0x41,
+	0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x1f, 0x0a, 0x07, 0x5a, 0x41, 0x44, 0x44, 0x52, 0x65,
 	0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x38, 0x0a, 0x0a, 0x5a, 0x50, 0x4f, 0x50, 0x4d,
-	0x49, 0x4e, 0x52, 0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74,
-	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a,
-	0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74,
-	0x73, 0x22, 0x48, 0x0a, 0x08, 0x5a, 0x52, 0x41, 0x4e, 0x4b, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a,
-	0x04, 0x72, 0x61, 0x6e, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x72, 0x61, 0x6e,
-	0x6b, 0x12, 0x28, 0x0a, 0x07, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65,
-	0x6e, 0x74, 0x52, 0x07, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x20, 0x0a, 0x08, 0x5a,
-	0x43, 0x41, 0x52, 0x44, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x10, 0x0a,
-	0x0e, 0x5a, 0x52, 0x41, 0x4e, 0x47, 0x45, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22,
-	0x10, 0x0a, 0x0e, 0x5a, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65,
-	0x73, 0x22, 0x0f, 0x0a, 0x0d, 0x5a, 0x43, 0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52,
-	0x65, 0x73, 0x2a, 0x19, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x06, 0x0a, 0x02,
-	0x4f, 0x4b, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x45, 0x52, 0x52, 0x10, 0x01, 0x42, 0x08, 0x5a,
-	0x06, 0x2e, 0x2f, 0x77, 0x69, 0x72, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x21, 0x0a, 0x09, 0x5a, 0x43, 0x4f, 0x55, 0x4e,
+	0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x1d, 0x0a, 0x07, 0x54, 0x59,
+	0x50, 0x45, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x23, 0x0a, 0x07, 0x50, 0x49, 0x4e,
+	0x47, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x1f,
+	0x0a, 0x07, 0x48, 0x47, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22,
+	0x1f, 0x0a, 0x07, 0x48, 0x53, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x22, 0x32, 0x0a, 0x08, 0x48, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x10, 0x0a, 0x03,
+	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14,
+	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x22, 0x38, 0x0a, 0x0a, 0x48, 0x47, 0x45, 0x54, 0x41, 0x4c, 0x4c, 0x52,
+	0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x48, 0x45, 0x6c, 0x65,
+	0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x22,
+	0x0a, 0x06, 0x54, 0x54, 0x4c, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x65, 0x63, 0x6f,
+	0x6e, 0x64, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x73, 0x65, 0x63, 0x6f, 0x6e,
+	0x64, 0x73, 0x22, 0x2a, 0x0a, 0x09, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x52, 0x65, 0x73, 0x12,
+	0x1d, 0x0a, 0x0a, 0x69, 0x73, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x09, 0x69, 0x73, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x22, 0x2c,
+	0x0a, 0x0b, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x41, 0x54, 0x52, 0x65, 0x73, 0x12, 0x1d, 0x0a,
+	0x0a, 0x69, 0x73, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x09, 0x69, 0x73, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x22, 0x2a, 0x0a, 0x0d,
+	0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x54, 0x49, 0x4d, 0x45, 0x52, 0x65, 0x73, 0x12, 0x19, 0x0a,
+	0x08, 0x75, 0x6e, 0x69, 0x78, 0x5f, 0x73, 0x65, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x07, 0x75, 0x6e, 0x69, 0x78, 0x53, 0x65, 0x63, 0x22, 0x23, 0x0a, 0x07, 0x45, 0x43, 0x48, 0x4f,
+	0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x21, 0x0a,
+	0x09, 0x45, 0x58, 0x49, 0x53, 0x54, 0x53, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x22, 0x0e, 0x0a, 0x0c, 0x48, 0x41, 0x4e, 0x44, 0x53, 0x48, 0x41, 0x4b, 0x45, 0x52, 0x65, 0x73,
+	0x22, 0x1e, 0x0a, 0x06, 0x47, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x22, 0x20, 0x0a, 0x08, 0x47, 0x45, 0x54, 0x45, 0x58, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x47, 0x45, 0x54, 0x53, 0x45, 0x54, 0x52, 0x65, 0x73, 0x12,
+	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x47, 0x45, 0x54, 0x44, 0x45, 0x4c, 0x52,
+	0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x08, 0x0a, 0x06, 0x53, 0x45, 0x54, 0x52,
+	0x65, 0x73, 0x22, 0x1e, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05,
+	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x22, 0x0c, 0x0a, 0x0a, 0x46, 0x4c, 0x55, 0x53, 0x48, 0x44, 0x42, 0x52, 0x65, 0x73,
+	0x22, 0x1d, 0x0a, 0x07, 0x4b, 0x45, 0x59, 0x53, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6b,
+	0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22,
+	0x1f, 0x0a, 0x07, 0x49, 0x4e, 0x43, 0x52, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x22, 0x1f, 0x0a, 0x07, 0x44, 0x45, 0x43, 0x52, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x22, 0x21, 0x0a, 0x09, 0x49, 0x4e, 0x43, 0x52, 0x42, 0x59, 0x52, 0x65, 0x73, 0x12, 0x14,
+	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x22, 0x21, 0x0a, 0x09, 0x44, 0x45, 0x43, 0x52, 0x42, 0x59, 0x52, 0x65,
+	0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x38, 0x0a, 0x08, 0x5a, 0x45, 0x6c, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x65, 0x6d,
+	0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6d, 0x65, 0x6d, 0x62, 0x65,
+	0x72, 0x22, 0x37, 0x0a, 0x09, 0x5a, 0x52, 0x41, 0x4e, 0x47, 0x45, 0x52, 0x65, 0x73, 0x12, 0x2a,
+	0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74,
+	0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x38, 0x0a, 0x0a, 0x5a, 0x50,
+	0x4f, 0x50, 0x4d, 0x41, 0x58, 0x52, 0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72,
+	0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x22, 0x1f, 0x0a, 0x07, 0x5a, 0x52, 0x45, 0x4d, 0x52, 0x65, 0x73, 0x12,
+	0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05,
+	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x38, 0x0a, 0x0a, 0x5a, 0x50, 0x4f, 0x50, 0x4d, 0x49, 0x4e,
+	0x52, 0x65, 0x73, 0x12, 0x2a, 0x0a, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c,
+	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x22,
+	0x48, 0x0a, 0x08, 0x5a, 0x52, 0x41, 0x4e, 0x4b, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x72,
+	0x61, 0x6e, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x72, 0x61, 0x6e, 0x6b, 0x12,
+	0x28, 0x0a, 0x07, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x0e, 0x2e, 0x77, 0x69, 0x72, 0x65, 0x2e, 0x5a, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74,
+	0x52, 0x07, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x20, 0x0a, 0x08, 0x5a, 0x43, 0x41,
+	0x52, 0x44, 0x52, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x10, 0x0a, 0x0e, 0x5a,
+	0x52, 0x41, 0x4e, 0x47, 0x45, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22, 0x10, 0x0a,
+	0x0e, 0x5a, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73, 0x22,
+	0x0f, 0x0a, 0x0d, 0x5a, 0x43, 0x41, 0x52, 0x44, 0x57, 0x41, 0x54, 0x43, 0x48, 0x52, 0x65, 0x73,
+	0x2a, 0x19, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x06, 0x0a, 0x02, 0x4f, 0x4b,
+	0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x45, 0x52, 0x52, 0x10, 0x01, 0x42, 0x08, 0x5a, 0x06, 0x2e,
+	0x2f, 0x77, 0x69, 0x72, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -2752,103 +2809,105 @@ func file_protos_res_proto_rawDescGZIP() []byte {
 }
 
 var file_protos_res_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_protos_res_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
+var file_protos_res_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_protos_res_proto_goTypes = []any{
 	(Status)(0),             // 0: wire.Status
 	(*Result)(nil),          // 1: wire.Result
-	(*HGETWATCHRes)(nil),    // 2: wire.HGETWATCHRes
-	(*HGETALLWATCHRes)(nil), // 3: wire.HGETALLWATCHRes
-	(*GETWATCHRes)(nil),     // 4: wire.GETWATCHRes
-	(*UNWATCHRes)(nil),      // 5: wire.UNWATCHRes
-	(*ZADDRes)(nil),         // 6: wire.ZADDRes
-	(*ZCOUNTRes)(nil),       // 7: wire.ZCOUNTRes
-	(*TYPERes)(nil),         // 8: wire.TYPERes
-	(*PINGRes)(nil),         // 9: wire.PINGRes
-	(*HGETRes)(nil),         // 10: wire.HGETRes
-	(*HSETRes)(nil),         // 11: wire.HSETRes
-	(*HElement)(nil),        // 12: wire.HElement
-	(*HGETALLRes)(nil),      // 13: wire.HGETALLRes
-	(*TTLRes)(nil),          // 14: wire.TTLRes
-	(*EXPIRERes)(nil),       // 15: wire.EXPIRERes
-	(*EXPIREATRes)(nil),     // 16: wire.EXPIREATRes
-	(*EXPIRETIMERes)(nil),   // 17: wire.EXPIRETIMERes
-	(*ECHORes)(nil),         // 18: wire.ECHORes
-	(*EXISTSRes)(nil),       // 19: wire.EXISTSRes
-	(*HANDSHAKERes)(nil),    // 20: wire.HANDSHAKERes
-	(*GETRes)(nil),          // 21: wire.GETRes
-	(*GETEXRes)(nil),        // 22: wire.GETEXRes
-	(*GETSETRes)(nil),       // 23: wire.GETSETRes
-	(*GETDELRes)(nil),       // 24: wire.GETDELRes
-	(*SETRes)(nil),          // 25: wire.SETRes
-	(*DELRes)(nil),          // 26: wire.DELRes
-	(*FLUSHDBRes)(nil),      // 27: wire.FLUSHDBRes
-	(*KEYSRes)(nil),         // 28: wire.KEYSRes
-	(*INCRRes)(nil),         // 29: wire.INCRRes
-	(*DECRRes)(nil),         // 30: wire.DECRRes
-	(*INCRBYRes)(nil),       // 31: wire.INCRBYRes
-	(*DECRBYRes)(nil),       // 32: wire.DECRBYRes
-	(*ZElement)(nil),        // 33: wire.ZElement
-	(*ZRANGERes)(nil),       // 34: wire.ZRANGERes
-	(*ZPOPMAXRes)(nil),      // 35: wire.ZPOPMAXRes
-	(*ZREMRes)(nil),         // 36: wire.ZREMRes
-	(*ZPOPMINRes)(nil),      // 37: wire.ZPOPMINRes
-	(*ZRANKRes)(nil),        // 38: wire.ZRANKRes
-	(*ZCARDRes)(nil),        // 39: wire.ZCARDRes
-	(*ZRANGEWATCHRes)(nil),  // 40: wire.ZRANGEWATCHRes
-	(*ZCOUNTWATCHRes)(nil),  // 41: wire.ZCOUNTWATCHRes
-	(*ZCARDWATCHRes)(nil),   // 42: wire.ZCARDWATCHRes
+	(*ZRANKWATCHRes)(nil),   // 2: wire.ZRANKWATCHRes
+	(*HGETWATCHRes)(nil),    // 3: wire.HGETWATCHRes
+	(*HGETALLWATCHRes)(nil), // 4: wire.HGETALLWATCHRes
+	(*GETWATCHRes)(nil),     // 5: wire.GETWATCHRes
+	(*UNWATCHRes)(nil),      // 6: wire.UNWATCHRes
+	(*ZADDRes)(nil),         // 7: wire.ZADDRes
+	(*ZCOUNTRes)(nil),       // 8: wire.ZCOUNTRes
+	(*TYPERes)(nil),         // 9: wire.TYPERes
+	(*PINGRes)(nil),         // 10: wire.PINGRes
+	(*HGETRes)(nil),         // 11: wire.HGETRes
+	(*HSETRes)(nil),         // 12: wire.HSETRes
+	(*HElement)(nil),        // 13: wire.HElement
+	(*HGETALLRes)(nil),      // 14: wire.HGETALLRes
+	(*TTLRes)(nil),          // 15: wire.TTLRes
+	(*EXPIRERes)(nil),       // 16: wire.EXPIRERes
+	(*EXPIREATRes)(nil),     // 17: wire.EXPIREATRes
+	(*EXPIRETIMERes)(nil),   // 18: wire.EXPIRETIMERes
+	(*ECHORes)(nil),         // 19: wire.ECHORes
+	(*EXISTSRes)(nil),       // 20: wire.EXISTSRes
+	(*HANDSHAKERes)(nil),    // 21: wire.HANDSHAKERes
+	(*GETRes)(nil),          // 22: wire.GETRes
+	(*GETEXRes)(nil),        // 23: wire.GETEXRes
+	(*GETSETRes)(nil),       // 24: wire.GETSETRes
+	(*GETDELRes)(nil),       // 25: wire.GETDELRes
+	(*SETRes)(nil),          // 26: wire.SETRes
+	(*DELRes)(nil),          // 27: wire.DELRes
+	(*FLUSHDBRes)(nil),      // 28: wire.FLUSHDBRes
+	(*KEYSRes)(nil),         // 29: wire.KEYSRes
+	(*INCRRes)(nil),         // 30: wire.INCRRes
+	(*DECRRes)(nil),         // 31: wire.DECRRes
+	(*INCRBYRes)(nil),       // 32: wire.INCRBYRes
+	(*DECRBYRes)(nil),       // 33: wire.DECRBYRes
+	(*ZElement)(nil),        // 34: wire.ZElement
+	(*ZRANGERes)(nil),       // 35: wire.ZRANGERes
+	(*ZPOPMAXRes)(nil),      // 36: wire.ZPOPMAXRes
+	(*ZREMRes)(nil),         // 37: wire.ZREMRes
+	(*ZPOPMINRes)(nil),      // 38: wire.ZPOPMINRes
+	(*ZRANKRes)(nil),        // 39: wire.ZRANKRes
+	(*ZCARDRes)(nil),        // 40: wire.ZCARDRes
+	(*ZRANGEWATCHRes)(nil),  // 41: wire.ZRANGEWATCHRes
+	(*ZCOUNTWATCHRes)(nil),  // 42: wire.ZCOUNTWATCHRes
+	(*ZCARDWATCHRes)(nil),   // 43: wire.ZCARDWATCHRes
 }
 var file_protos_res_proto_depIdxs = []int32{
 	0,  // 0: wire.Result.status:type_name -> wire.Status
-	8,  // 1: wire.Result.TYPERes:type_name -> wire.TYPERes
-	9,  // 2: wire.Result.PINGRes:type_name -> wire.PINGRes
-	18, // 3: wire.Result.ECHORes:type_name -> wire.ECHORes
-	20, // 4: wire.Result.HANDSHAKERes:type_name -> wire.HANDSHAKERes
-	19, // 5: wire.Result.EXISTSRes:type_name -> wire.EXISTSRes
-	21, // 6: wire.Result.GETRes:type_name -> wire.GETRes
-	25, // 7: wire.Result.SETRes:type_name -> wire.SETRes
-	26, // 8: wire.Result.DELRes:type_name -> wire.DELRes
-	28, // 9: wire.Result.KEYSRes:type_name -> wire.KEYSRes
-	24, // 10: wire.Result.GETDELRes:type_name -> wire.GETDELRes
-	22, // 11: wire.Result.GETEXRes:type_name -> wire.GETEXRes
-	23, // 12: wire.Result.GETSETRes:type_name -> wire.GETSETRes
-	29, // 13: wire.Result.INCRRes:type_name -> wire.INCRRes
-	30, // 14: wire.Result.DECRRes:type_name -> wire.DECRRes
-	31, // 15: wire.Result.INCRBYRes:type_name -> wire.INCRBYRes
-	32, // 16: wire.Result.DECRBYRes:type_name -> wire.DECRBYRes
-	27, // 17: wire.Result.FLUSHDBRes:type_name -> wire.FLUSHDBRes
-	15, // 18: wire.Result.EXPIRERes:type_name -> wire.EXPIRERes
-	16, // 19: wire.Result.EXPIREATRes:type_name -> wire.EXPIREATRes
-	17, // 20: wire.Result.EXPIRETIMERes:type_name -> wire.EXPIRETIMERes
-	14, // 21: wire.Result.TTLRes:type_name -> wire.TTLRes
-	4,  // 22: wire.Result.GETWATCHRes:type_name -> wire.GETWATCHRes
-	5,  // 23: wire.Result.UNWATCHRes:type_name -> wire.UNWATCHRes
-	10, // 24: wire.Result.HGETRes:type_name -> wire.HGETRes
-	11, // 25: wire.Result.HSETRes:type_name -> wire.HSETRes
-	13, // 26: wire.Result.HGETALLRes:type_name -> wire.HGETALLRes
-	2,  // 27: wire.Result.HGETWATCHRes:type_name -> wire.HGETWATCHRes
-	3,  // 28: wire.Result.HGETALLWATCHRes:type_name -> wire.HGETALLWATCHRes
-	6,  // 29: wire.Result.ZADDRes:type_name -> wire.ZADDRes
-	7,  // 30: wire.Result.ZCOUNTRes:type_name -> wire.ZCOUNTRes
-	34, // 31: wire.Result.ZRANGERes:type_name -> wire.ZRANGERes
-	35, // 32: wire.Result.ZPOPMAXRes:type_name -> wire.ZPOPMAXRes
-	36, // 33: wire.Result.ZREMRes:type_name -> wire.ZREMRes
-	37, // 34: wire.Result.ZPOPMINRes:type_name -> wire.ZPOPMINRes
-	38, // 35: wire.Result.ZRANKRes:type_name -> wire.ZRANKRes
-	39, // 36: wire.Result.ZCARDRes:type_name -> wire.ZCARDRes
-	40, // 37: wire.Result.ZRANGEWATCHRes:type_name -> wire.ZRANGEWATCHRes
-	41, // 38: wire.Result.ZCOUNTWATCHRes:type_name -> wire.ZCOUNTWATCHRes
-	42, // 39: wire.Result.ZCARDWATCHRes:type_name -> wire.ZCARDWATCHRes
-	12, // 40: wire.HGETALLRes.elements:type_name -> wire.HElement
-	33, // 41: wire.ZRANGERes.elements:type_name -> wire.ZElement
-	33, // 42: wire.ZPOPMAXRes.elements:type_name -> wire.ZElement
-	33, // 43: wire.ZPOPMINRes.elements:type_name -> wire.ZElement
-	33, // 44: wire.ZRANKRes.element:type_name -> wire.ZElement
-	45, // [45:45] is the sub-list for method output_type
-	45, // [45:45] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	9,  // 1: wire.Result.TYPERes:type_name -> wire.TYPERes
+	10, // 2: wire.Result.PINGRes:type_name -> wire.PINGRes
+	19, // 3: wire.Result.ECHORes:type_name -> wire.ECHORes
+	21, // 4: wire.Result.HANDSHAKERes:type_name -> wire.HANDSHAKERes
+	20, // 5: wire.Result.EXISTSRes:type_name -> wire.EXISTSRes
+	22, // 6: wire.Result.GETRes:type_name -> wire.GETRes
+	26, // 7: wire.Result.SETRes:type_name -> wire.SETRes
+	27, // 8: wire.Result.DELRes:type_name -> wire.DELRes
+	29, // 9: wire.Result.KEYSRes:type_name -> wire.KEYSRes
+	25, // 10: wire.Result.GETDELRes:type_name -> wire.GETDELRes
+	23, // 11: wire.Result.GETEXRes:type_name -> wire.GETEXRes
+	24, // 12: wire.Result.GETSETRes:type_name -> wire.GETSETRes
+	30, // 13: wire.Result.INCRRes:type_name -> wire.INCRRes
+	31, // 14: wire.Result.DECRRes:type_name -> wire.DECRRes
+	32, // 15: wire.Result.INCRBYRes:type_name -> wire.INCRBYRes
+	33, // 16: wire.Result.DECRBYRes:type_name -> wire.DECRBYRes
+	28, // 17: wire.Result.FLUSHDBRes:type_name -> wire.FLUSHDBRes
+	16, // 18: wire.Result.EXPIRERes:type_name -> wire.EXPIRERes
+	17, // 19: wire.Result.EXPIREATRes:type_name -> wire.EXPIREATRes
+	18, // 20: wire.Result.EXPIRETIMERes:type_name -> wire.EXPIRETIMERes
+	15, // 21: wire.Result.TTLRes:type_name -> wire.TTLRes
+	5,  // 22: wire.Result.GETWATCHRes:type_name -> wire.GETWATCHRes
+	6,  // 23: wire.Result.UNWATCHRes:type_name -> wire.UNWATCHRes
+	11, // 24: wire.Result.HGETRes:type_name -> wire.HGETRes
+	12, // 25: wire.Result.HSETRes:type_name -> wire.HSETRes
+	14, // 26: wire.Result.HGETALLRes:type_name -> wire.HGETALLRes
+	3,  // 27: wire.Result.HGETWATCHRes:type_name -> wire.HGETWATCHRes
+	4,  // 28: wire.Result.HGETALLWATCHRes:type_name -> wire.HGETALLWATCHRes
+	7,  // 29: wire.Result.ZADDRes:type_name -> wire.ZADDRes
+	8,  // 30: wire.Result.ZCOUNTRes:type_name -> wire.ZCOUNTRes
+	35, // 31: wire.Result.ZRANGERes:type_name -> wire.ZRANGERes
+	36, // 32: wire.Result.ZPOPMAXRes:type_name -> wire.ZPOPMAXRes
+	37, // 33: wire.Result.ZREMRes:type_name -> wire.ZREMRes
+	38, // 34: wire.Result.ZPOPMINRes:type_name -> wire.ZPOPMINRes
+	39, // 35: wire.Result.ZRANKRes:type_name -> wire.ZRANKRes
+	40, // 36: wire.Result.ZCARDRes:type_name -> wire.ZCARDRes
+	41, // 37: wire.Result.ZRANGEWATCHRes:type_name -> wire.ZRANGEWATCHRes
+	42, // 38: wire.Result.ZCOUNTWATCHRes:type_name -> wire.ZCOUNTWATCHRes
+	43, // 39: wire.Result.ZCARDWATCHRes:type_name -> wire.ZCARDWATCHRes
+	2,  // 40: wire.Result.ZRANKWATCHRes:type_name -> wire.ZRANKWATCHRes
+	13, // 41: wire.HGETALLRes.elements:type_name -> wire.HElement
+	34, // 42: wire.ZRANGERes.elements:type_name -> wire.ZElement
+	34, // 43: wire.ZPOPMAXRes.elements:type_name -> wire.ZElement
+	34, // 44: wire.ZPOPMINRes.elements:type_name -> wire.ZElement
+	34, // 45: wire.ZRANKRes.element:type_name -> wire.ZElement
+	46, // [46:46] is the sub-list for method output_type
+	46, // [46:46] is the sub-list for method input_type
+	46, // [46:46] is the sub-list for extension type_name
+	46, // [46:46] is the sub-list for extension extendee
+	0,  // [0:46] is the sub-list for field type_name
 }
 
 func init() { file_protos_res_proto_init() }
@@ -2896,6 +2955,7 @@ func file_protos_res_proto_init() {
 		(*Result_ZRANGEWATCHRes)(nil),
 		(*Result_ZCOUNTWATCHRes)(nil),
 		(*Result_ZCARDWATCHRes)(nil),
+		(*Result_ZRANKWATCHRes)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2903,7 +2963,7 @@ func file_protos_res_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protos_res_proto_rawDesc), len(file_protos_res_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   42,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
