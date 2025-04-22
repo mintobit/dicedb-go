@@ -2,39 +2,30 @@ package dicedb
 
 import (
 	"fmt"
-	"io"
-	"net"
+	"log/slog"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
 
-	"github.com/dicedb/dicedb-go/ironhawk"
 	"github.com/dicedb/dicedb-go/wire"
 	"github.com/google/uuid"
 )
 
-var mu sync.Mutex
+const maxResponseSize = 32 * 1024 * 1024 // 32 MB
 
 type Client struct {
-	id        string
-	conn      net.Conn
-	watchConn net.Conn
-	watchCh   chan *wire.Result
-	host      string
-	port      int
+	id           string
+	mainMu       sync.Mutex
+	mainRetrier  *Retrier
+	mainWire     *ClientWire
+	watchRetrier *Retrier
+	watchWire    *ClientWire
+	watchCh      chan *wire.Result
+	host         string
+	port         int
 }
 
 type option func(*Client)
-
-func newConn(host string, port int) (net.Conn, error) {
-	addr := fmt.Sprintf("%s:%d", host, port)
-	conn, err := net.DialTimeout("tcp", addr, 5*time.Second)
-	if err != nil {
-		return nil, err
-	}
-	return conn, nil
-}
 
 func WithID(id string) option {
 	return func(c *Client) {
@@ -43,12 +34,26 @@ func WithID(id string) option {
 }
 
 func NewClient(host string, port int, opts ...option) (*Client, error) {
-	conn, err := newConn(host, port)
+	mainRetrier := NewRetrier(3, 5*time.Second)
+	clientWire, err := ExecuteWithResult(mainRetrier, []wire.ErrKind{wire.NotEstablished}, func() (*ClientWire, *wire.WireError) {
+		return NewClientWire(maxResponseSize, host, port)
+	}, noop)
+
 	if err != nil {
-		return nil, err
+		if err.Kind == wire.NotEstablished {
+			return nil, fmt.Errorf("could not connect to dicedb server after %d retries: %w", mainRetrier.maxRetries, err)
+		}
+
+		return nil, fmt.Errorf("unexpected error when establishing server connection, report this to dicedb maintainers: %w", err)
 	}
 
-	client := &Client{conn: conn, host: host, port: port}
+	client := &Client{
+		mainRetrier: mainRetrier,
+		mainWire:    clientWire,
+		host:        host,
+		port:        port,
+	}
+
 	for _, opt := range opts {
 		opt(client)
 	}
@@ -67,19 +72,37 @@ func NewClient(host string, port int, opts ...option) (*Client, error) {
 	return client, nil
 }
 
-func (c *Client) fire(cmd *wire.Command, co net.Conn) *wire.Result {
-	if err := ironhawk.Write(co, cmd); err != nil {
+func (c *Client) fire(cmd *wire.Command, clientWire *ClientWire) *wire.Result {
+	c.mainMu.Lock()
+	defer c.mainMu.Unlock()
+
+	err := ExecuteVoid(c.mainRetrier, []wire.ErrKind{wire.Terminated}, func() *wire.WireError {
+		return clientWire.Send(cmd)
+	}, c.restoreMainWire)
+
+	if err != nil {
+		var message string
+
+		switch err.Kind {
+		case wire.Terminated:
+			message = fmt.Sprintf("failied to send command, connection terminated: %w", err.Cause)
+		case wire.CorruptMessage:
+			message = fmt.Sprintf("failied to send command, corrupt message: %w", err.Cause)
+		default:
+			message = fmt.Sprintf("failed to send command: unrecognized error, this should be reported to DiceDB maintainers: %w", err.Cause)
+		}
+
 		return &wire.Result{
 			Status:  wire.Status_ERR,
-			Message: err.Error(),
+			Message: message,
 		}
 	}
 
-	resp, err := ironhawk.Read(co)
+	resp, err := clientWire.Receive()
 	if err != nil {
 		return &wire.Result{
 			Status:  wire.Status_ERR,
-			Message: err.Error(),
+			Message: fmt.Sprintf("failed to receive response: %s", err.Cause),
 		}
 	}
 
@@ -87,47 +110,7 @@ func (c *Client) fire(cmd *wire.Command, co net.Conn) *wire.Result {
 }
 
 func (c *Client) Fire(cmd *wire.Command) *wire.Result {
-	result := c.fire(cmd, c.conn)
-	if result.Status == wire.Status_ERR {
-		if c.checkAndReconnect(result.Message) {
-			return c.Fire(cmd)
-		}
-	}
-	return result
-}
-
-func (c *Client) checkAndReconnect(err string) bool {
-	if err == io.EOF.Error() || strings.Contains(err, syscall.EPIPE.Error()) {
-		fmt.Println("reconnecting ...")
-		nc, err := getOrCreateClient(c)
-		if err != nil {
-			fmt.Println("failed to reconnect. error:", err)
-			return false
-		}
-		*c = *nc
-		return true
-	}
-	return false
-}
-
-func getOrCreateClient(c *Client) (*Client, error) {
-	mu.Lock()
-	defer mu.Unlock()
-
-	if c == nil {
-		return NewClient(c.host, c.port)
-	}
-
-	newClient, err := NewClient(c.host, c.port)
-	if err != nil {
-		return nil, err
-	}
-
-	if c.conn != nil {
-		c.conn.Close()
-	}
-
-	return newClient, nil
+	return c.fire(cmd, c.mainWire)
 }
 
 func (c *Client) FireString(cmdStr string) *wire.Result {
@@ -153,15 +136,16 @@ func (c *Client) WatchCh() (<-chan *wire.Result, error) {
 	}
 
 	c.watchCh = make(chan *wire.Result)
-	c.watchConn, err = newConn(c.host, c.port)
+	c.watchRetrier = NewRetrier(5, 5*time.Second)
+	c.watchWire, err = NewClientWire(maxResponseSize, c.host, c.port)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to establish watch connection with server: %w", err)
 	}
 
 	if resp := c.fire(&wire.Command{
 		Cmd:  "HANDSHAKE",
 		Args: []string{c.id, "watch"},
-	}, c.watchConn); resp.Status == wire.Status_ERR {
+	}, c.watchWire); resp.Status == wire.Status_ERR {
 		return nil, fmt.Errorf("could not complete the handshake: %s", resp.Message)
 	}
 
@@ -172,13 +156,13 @@ func (c *Client) WatchCh() (<-chan *wire.Result, error) {
 
 func (c *Client) watch() {
 	for {
-		resp, err := ironhawk.Read(c.watchConn)
+		resp, err := ExecuteWithResult(c.watchRetrier, []wire.ErrKind{wire.Terminated}, c.watchWire.Receive, c.restoreWatchWire)
+
 		if err != nil {
-			// TODO: handle this better
-			// send the error to the user. maybe through context?
-			if !c.checkAndReconnect(err.Error()) {
-				panic(err)
-			}
+			slog.Error("watch connection has been terminated due to an error", "err", err)
+			close(c.watchCh)
+			c.watchWire.Close()
+			break
 		}
 
 		c.watchCh <- resp
@@ -186,5 +170,36 @@ func (c *Client) watch() {
 }
 
 func (c *Client) Close() {
-	c.conn.Close()
+	c.mainWire.Close()
+	if c.watchCh != nil {
+		c.watchWire.Close()
+		close(c.watchCh)
+	}
+}
+
+func (c *Client) restoreMainWire() *wire.WireError {
+	return c.restoreWire(c.mainWire)
+}
+
+func (c *Client) restoreWatchWire() *wire.WireError {
+	return c.restoreWire(c.watchWire)
+}
+
+func (c *Client) restoreWire(dst *ClientWire) *wire.WireError {
+	slog.Warn("trying to restore connection with server...")
+
+	clientWire, err := NewClientWire(maxResponseSize, c.host, c.port)
+
+	if err != nil {
+		slog.Warn("failed to restore connection with server", "error", err)
+		return err
+	}
+
+	dst = clientWire
+	slog.Info("connection restored successfully")
+	return nil
+}
+
+func noop() *wire.WireError {
+	return nil
 }
