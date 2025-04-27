@@ -130,7 +130,7 @@ func (c *Client) FireString(cmdStr string) *wire.Result {
 }
 
 func (c *Client) WatchCh() (<-chan *wire.Result, error) {
-	var err error
+	var err *wire.WireError
 	if c.watchCh != nil {
 		return c.watchCh, nil
 	}
