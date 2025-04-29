@@ -10,7 +10,7 @@ generate:
 	protoc --go_out=. --go-grpc_out=. protos/*.proto
 
 test:
-	go test -v ./...
+	go test ./...
 
 release:
 	git tag -a $(VERSION) -m "release $(VERSION)"
