@@ -14,10 +14,10 @@ type WireError struct {
 	Cause error
 }
 
-func (e WireError) Error() string {
+func (e *WireError) Error() string {
 	return e.Cause.Error()
 }
 
-func (e WireError) Unwrap() error {
+func (e *WireError) Unwrap() error {
 	return e.Cause
 }
