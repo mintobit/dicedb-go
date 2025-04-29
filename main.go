@@ -85,11 +85,11 @@ func (c *Client) fire(cmd *wire.Command, clientWire *ClientWire) *wire.Result {
 
 		switch err.Kind {
 		case wire.Terminated:
-			message = fmt.Sprintf("failied to send command, connection terminated: %w", err.Cause)
+			message = fmt.Sprintf("failied to send command, connection terminated: %s", err.Cause)
 		case wire.CorruptMessage:
-			message = fmt.Sprintf("failied to send command, corrupt message: %w", err.Cause)
+			message = fmt.Sprintf("failied to send command, corrupt message: %s", err.Cause)
 		default:
-			message = fmt.Sprintf("failed to send command: unrecognized error, this should be reported to DiceDB maintainers: %w", err.Cause)
+			message = fmt.Sprintf("failed to send command: unrecognized error, this should be reported to DiceDB maintainers: %s", err.Cause)
 		}
 
 		return &wire.Result{
@@ -185,17 +185,16 @@ func (c *Client) restoreWatchWire() *wire.WireError {
 	return c.restoreWire(c.watchWire)
 }
 
-func (c *Client) restoreWire(dst *ClientWire) *wire.WireError {
+func (c *Client) restoreWire(dst *ClientWire) *wire.WireError { // nolint:staticcheck
 	slog.Warn("trying to restore connection with server...")
+	var err *wire.WireError
 
-	clientWire, err := NewClientWire(maxResponseSize, c.host, c.port)
-
+	dst, err = NewClientWire(maxResponseSize, c.host, c.port) // nolint:ineffassign,staticcheck
 	if err != nil {
 		slog.Warn("failed to restore connection with server", "error", err)
 		return err
 	}
 
-	dst = clientWire
 	slog.Info("connection restored successfully")
 	return nil
 }

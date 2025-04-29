@@ -1,28 +1,11 @@
 package dicedb
 
 import (
-	"bytes"
 	"errors"
 	"testing"
 
 	"github.com/dicedb/dicedb-go/wire"
 )
-
-func areResponseValuesEqual(r1, r2 *wire.Response) bool {
-	switch r1.Value.(type) {
-	case *wire.Response_VStr:
-		return r1.Value.(*wire.Response_VStr).VStr == r2.Value.(*wire.Response_VStr).VStr
-	case *wire.Response_VInt:
-		return r1.Value.(*wire.Response_VInt).VInt == r2.Value.(*wire.Response_VInt).VInt
-	case *wire.Response_VFloat:
-		return r1.Value.(*wire.Response_VFloat).VFloat == r2.Value.(*wire.Response_VFloat).VFloat
-	case *wire.Response_VBytes:
-		return bytes.Equal(r1.Value.(*wire.Response_VBytes).VBytes, r2.Value.(*wire.Response_VBytes).VBytes)
-	case *wire.Response_VNil:
-		return r1.Value.(*wire.Response_VNil) == r2.Value.(*wire.Response_VNil)
-	}
-	return false
-}
 
 func TestNewClient(t *testing.T) {
 	tests := []struct {
@@ -44,14 +27,14 @@ func TestNewClient(t *testing.T) {
 			host:    "localhost",
 			port:    -1,
 			wantNil: true,
-			err:     errors.New("dial tcp: address -1: invalid port"),
+			err:     errors.New("could not connect to dicedb server after 3 retries: dial tcp: address -1: invalid port"),
 		},
 		{
 			name:    "unable to connect",
 			host:    "localhost",
 			port:    9999,
 			wantNil: true,
-			err:     errors.New("dial tcp 127.0.0.1:9999: connect: connection refused"),
+			err:     errors.New("could not connect to dicedb server after 3 retries: dial tcp 127.0.0.1:9999: connect: connection refused"),
 		},
 	}
 
@@ -78,14 +61,14 @@ func TestClient_Fire(t *testing.T) {
 		name     string
 		mockConn *Client
 		cmd      *wire.Command
-		result   *wire.Response
+		result   *wire.Result
 		err      error
 	}{
 		{
 			name:     "successful command",
 			mockConn: client,
 			cmd:      &wire.Command{Cmd: "PING"},
-			result:   &wire.Response{Value: &wire.Response_VStr{VStr: "PONG"}},
+			result:   &wire.Result{Status: wire.Status_OK, Response: &wire.Result_PINGRes{PINGRes: &wire.PINGRes{Message: "PONG"}}},
 			err:      nil,
 		},
 	}
@@ -93,11 +76,11 @@ func TestClient_Fire(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			resp := tt.mockConn.Fire(tt.cmd)
-			if tt.err != nil && resp.Err != tt.err.Error() {
-				t.Errorf("Fire() expected error: %v, want: %v", resp.Err, tt.err)
+			if tt.err != nil && resp.Status != wire.Status_ERR {
+				t.Errorf("Fire() expected error: %v, want: %v", resp.Status, tt.err)
 			}
-			if !areResponseValuesEqual(resp, tt.result) {
-				t.Errorf("Fire() unexpected response: %v, want: %v", resp, tt.result)
+			if resp.GetPINGRes().Message != tt.result.GetPINGRes().Message {
+				t.Errorf("Fire() unexpected response: %v, want: %v", resp.GetPINGRes().Message, tt.result.GetPINGRes().Message)
 			}
 		})
 	}
